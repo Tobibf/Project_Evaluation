@@ -14,13 +14,14 @@ import java.util.List;
 public class Criterion {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
 
     @Column(unique = true)
     private String name;
 
-    @ManyToOne
-    private Evaluation author;
+    @OneToMany(mappedBy = "criterion", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Notation> noteList  = new ArrayList<>();
 
     private LocalDate createdAt;
 

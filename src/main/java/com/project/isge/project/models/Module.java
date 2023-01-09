@@ -2,9 +2,7 @@ package com.project.isge.project.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.persistence.Id;
 import lombok.Data;
-
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,25 +10,19 @@ import java.util.List;
 
 @Data
 @Entity
-public class Evaluation {
+public class Module {
     @Id
     @GeneratedValue
     private long id;
 
-    private String user;
+    @Column(unique = true)
+    private String name;
 
-    @Column(columnDefinition = "integer default 0")
-    private float average;
-
-    @ManyToOne
-    private Module module;
-
-    @OneToMany(mappedBy = "evaluation", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Notation> noteList  = new ArrayList<>();
+    private List<Evaluation> evaluationList = new ArrayList<>();
+
     private LocalDate createdAt;
-
-
     @PrePersist
     public void setup() {
         this.createdAt = LocalDate.now();
